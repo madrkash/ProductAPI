@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\001 - Create Product.sql" />
+    <None Remove="Scripts\002 - Create ProductOption.sql" />
+    <None Remove="Scripts\003 - Product Data Population.sql" />
+    <None Remove="Scripts\004 - ProductOption Data Population.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\001 - Create Product.sql" />
+    <EmbeddedResource Include="Scripts\002 - Create ProductOption.sql" />
+    <EmbeddedResource Include="Scripts\003 - Product Data Population.sql" />
+    <EmbeddedResource Include="Scripts\004 - ProductOption Data Population.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
+    <PackageReference Include="Npgsql" Version="5.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductStore.Core\ProductStore.Core.csproj" />
+  </ItemGroup>
+</Project>

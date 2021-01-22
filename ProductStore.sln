@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore.API", "src\ProductStore.API\ProductStore.API.csproj", "{318A8B59-544B-4B8B-B309-7D1CC4B64098}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore.Core", "src\ProductStore.Core\ProductStore.Core.csproj", "{A5A98715-4F18-4CA4-8BB6-4BA157939754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore.Infrastructure", "src\ProductStore.Infrastructure\ProductStore.Infrastructure.csproj", "{728A1157-3590-4325-9FF6-D8113B2275E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC9BA7B6-D58B-44D4-996A-6AED3B713D70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DB3C23F6-6DDC-4DA3-9286-F3F9677E6D9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore.IntegrationTests", "test\ProductStore.IntegrationTests\ProductStore.IntegrationTests.csproj", "{2C7E3CB2-6304-4759-A6C1-03EB578A3705}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore.UnitTests", "test\ProductStore.UnitTests\ProductStore.UnitTests.csproj", "{5E69B4A1-C37F-4F53-AA8D-E71B543272F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{83704461-8B75-470D-A904-B8EBFA509AEB}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductStore.Tests.Common", "test\ProductStore.Tests.Common\ProductStore.Tests.Common.csproj", "{BC33349F-8E3E-451C-93C9-13C6CA1098F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{318A8B59-544B-4B8B-B309-7D1CC4B64098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{318A8B59-544B-4B8B-B309-7D1CC4B64098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{318A8B59-544B-4B8B-B309-7D1CC4B64098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{318A8B59-544B-4B8B-B309-7D1CC4B64098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5A98715-4F18-4CA4-8BB6-4BA157939754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A98715-4F18-4CA4-8BB6-4BA157939754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A98715-4F18-4CA4-8BB6-4BA157939754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A98715-4F18-4CA4-8BB6-4BA157939754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{728A1157-3590-4325-9FF6-D8113B2275E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{728A1157-3590-4325-9FF6-D8113B2275E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{728A1157-3590-4325-9FF6-D8113B2275E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{728A1157-3590-4325-9FF6-D8113B2275E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7E3CB2-6304-4759-A6C1-03EB578A3705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7E3CB2-6304-4759-A6C1-03EB578A3705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7E3CB2-6304-4759-A6C1-03EB578A3705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7E3CB2-6304-4759-A6C1-03EB578A3705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E69B4A1-C37F-4F53-AA8D-E71B543272F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E69B4A1-C37F-4F53-AA8D-E71B543272F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E69B4A1-C37F-4F53-AA8D-E71B543272F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E69B4A1-C37F-4F53-AA8D-E71B543272F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC33349F-8E3E-451C-93C9-13C6CA1098F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC33349F-8E3E-451C-93C9-13C6CA1098F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC33349F-8E3E-451C-93C9-13C6CA1098F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC33349F-8E3E-451C-93C9-13C6CA1098F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{318A8B59-544B-4B8B-B309-7D1CC4B64098} = {BC9BA7B6-D58B-44D4-996A-6AED3B713D70}
+		{A5A98715-4F18-4CA4-8BB6-4BA157939754} = {BC9BA7B6-D58B-44D4-996A-6AED3B713D70}
+		{728A1157-3590-4325-9FF6-D8113B2275E4} = {BC9BA7B6-D58B-44D4-996A-6AED3B713D70}
+		{2C7E3CB2-6304-4759-A6C1-03EB578A3705} = {DB3C23F6-6DDC-4DA3-9286-F3F9677E6D9B}
+		{5E69B4A1-C37F-4F53-AA8D-E71B543272F6} = {DB3C23F6-6DDC-4DA3-9286-F3F9677E6D9B}
+		{BC33349F-8E3E-451C-93C9-13C6CA1098F5} = {DB3C23F6-6DDC-4DA3-9286-F3F9677E6D9B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1107AB05-D5E9-4BC7-8434-2D25A4027502}
+	EndGlobalSection
+EndGlobal

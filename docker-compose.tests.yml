@@ -1,0 +1,33 @@
+version: '3.4'
+
+services: 
+
+  testdata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5400:1433"
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    
+  
+  productstore-api:
+    image: productstore.api:1.0.0
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Production
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:80"    
+    depends_on:
+      - sqldata
+      - testdata

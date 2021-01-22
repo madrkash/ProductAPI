@@ -1,0 +1,4 @@
+﻿INSERT INTO ProductOption (Id, Name, Description, ProductId) VALUES ('450a0468-8bcd-4498-945f-64d29a98a425', 'Samsung Galaxy S8 Back Cover', 'Silicone Back Cover', '8f2e9176-35ee-4f0a-ae55-83023d2db2a3');
+INSERT INTO ProductOption (Id, Name, Description, ProductId) VALUES ('eb75595a-8568-4b6d-a7b5-723f25adfaf8', 'Samsung Galaxy S9 Back Cover', 'Silicone Back Cover', '8f2e9176-35ee-4f0a-ae55-83023d2db3a3');
+INSERT INTO ProductOption (Id, Name, Description, ProductId) VALUES ('d3d31f9e-a88f-4538-977a-74846d1e1607', 'Samsung Galaxy S8 Head Phones', 'Wired head phones', '8f2e9176-35ee-4f0a-ae55-83023d2db2a3');
+INSERT INTO ProductOption (Id, Name, Description, ProductId) VALUES ('849a60f5-e9b7-4c51-aa80-acd9c51dbbd3', 'Samsung Galaxy S7 Back Cover', 'Silicone Back Cover', '8f2e9176-35ee-4f0a-ae55-83023d2db1a3');
