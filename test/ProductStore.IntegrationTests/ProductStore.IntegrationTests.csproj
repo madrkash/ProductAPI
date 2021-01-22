@@ -35,6 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ProductStore.API\ProductStore.API.csproj" />
-    <ProjectReference Include="..\ProductStore.UnitTests\ProductStore.UnitTests.csproj" />
+    <ProjectReference Include="..\ProductStore.Tests.Common\ProductStore.Tests.Common.csproj" />
   </ItemGroup>
 </Project>

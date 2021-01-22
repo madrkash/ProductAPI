@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,10 +30,12 @@ namespace ProductStore.API
         {
             services.AddControllers(options =>
                {
-                   options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                  // options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                })
                 .AddNewtonsoftJson(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+             
+            services.AddProblemDetails();
 
             AddDatabaseAndMigrationServices(services);
 
@@ -74,6 +77,7 @@ namespace ProductStore.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseProblemDetails();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

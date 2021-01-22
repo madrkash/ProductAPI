@@ -1,22 +1,13 @@
 version: '3.4'
 
-services: 
+services:
 
-  testdata:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+  database:
+    image: postgres
     environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
+      - POSTGRES_PASSWORD=Pass@word            
     ports:
-      - "5400:1433"
-
-  sqldata:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
-    ports:
-      - "5433:1433"
+      - "5432:5432"
     
   
   productstore-api:
@@ -29,5 +20,4 @@ services:
     ports:
       - "8000:80"    
     depends_on:
-      - sqldata
-      - testdata
+      - database

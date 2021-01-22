@@ -1,33 +1,17 @@
 version: '3.4'
 
-services: 
+services:
 
-  testdata:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+  testdatabase:
+    image: postgres
     environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
-    ports:
-      - "5400:1433"
-
-  sqldata:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
-    ports:
-      - "5433:1433"
+      - POSTGRES_PASSWORD=Pass@word
     
   
-  productstore-api:
-    image: productstore.api:1.0.0
-    environment:
-     - ASPNETCORE_ENVIRONMENT=Production
+  integrationtests:
+    image: integrationtests:1.0.0   
     build:
       context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - "8000:80"    
+      dockerfile: ./IntegrationTests.Dockerfile       
     depends_on:
-      - sqldata
-      - testdata
+      - testdatabase

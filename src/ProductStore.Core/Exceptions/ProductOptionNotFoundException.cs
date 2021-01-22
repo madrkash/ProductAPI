@@ -7,6 +7,7 @@ namespace ProductStore.API.Exceptions
         public ProductOptionNotFoundException(Guid productOptionId)
             : base($"No product option found with id {productOptionId}")
         {
+
         }
 
         public ProductOptionNotFoundException(string message) : base(message)
