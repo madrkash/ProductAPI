@@ -21,7 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		docker-compose.yml = docker-compose.yml
+		docker-compose.tests.yml = docker-compose.tests.yml
 		Dockerfile = Dockerfile
+		IntegrationTests.Dockerfile = IntegrationTests.Dockerfile
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductStore.Tests.Common", "test\ProductStore.Tests.Common\ProductStore.Tests.Common.csproj", "{BC33349F-8E3E-451C-93C9-13C6CA1098F5}"

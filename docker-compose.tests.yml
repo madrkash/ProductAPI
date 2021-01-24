@@ -6,7 +6,6 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=Pass@word
-    
   
   integrationtests:
     image: integrationtests:1.0.0   

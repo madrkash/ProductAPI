@@ -9,7 +9,7 @@ Please find below the details of different aspects of development that I have at
 
 Clone the repo
 
-Navigate to path `ProductAPI\` and run the command `docker-compose up`
+Navigate to path `~\ProductAPI\` and run the command `docker-compose up`
 
 Swagger will then be accessible at  [http://localhost:8000/swagger/index.html](http://localhost:8000/swagger/index.html)  
 
@@ -68,11 +68,12 @@ I have based my solution on SOLID principles by employing:
 
 ### Integration Testing
 1. Comprehensive controller level testing covering all different success and failure CRUD scenarios by interacting with a separate test database running inside another container.
-2. Integration tests can be run from the solution after the database is created using `docker-compose up` command.
+2. Integration tests can be run after navigating to the path `~\ProductAPI\` by running the command 
+`docker-compose -f docker-compose.tests.yml up`.
 
-### Containerization
-1. Container communication between API and DB using **docker-compose**.
-2. A separate test DB container to run the integration tests.
+### Containerization using docker-compose
+1. Container communication between API and DB.
+2. A separate docker-compose setup for container communication between integration tests project and its own test DB.
 ### Documentation
 1. **Swagger** 
 
@@ -84,12 +85,8 @@ I have based my solution on SOLID principles by employing:
 
 If I had more time, I would have liked to implement the below features:
 
-1. Integration tests running within container and interacting with the containerized database. 
+1. Implement Jwt Authentication and corresponding Authorization to secure the APIs.
 
-2. Implement Jwt Authentication and corresponding Authorization to secure the APIs.
+2. Better and comprehensive logging at different levels.
 
-3. Better and comprehensive logging at different levels.
-
-4. Host the solution on AWS infrastructure 
-
- 
+3. Host the solution on AWS infrastructure

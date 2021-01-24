@@ -5,10 +5,7 @@ services:
   database:
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=Pass@word            
-    ports:
-      - "5432:5432"
-    
+      - POSTGRES_PASSWORD=Pass@word    
   
   productstore-api:
     image: productstore.api:1.0.0
