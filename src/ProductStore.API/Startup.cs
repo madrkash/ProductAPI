@@ -30,7 +30,7 @@ namespace ProductStore.API
         {
             services.AddControllers(options =>
                {
-                  // options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                  options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                })
                 .AddNewtonsoftJson(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
