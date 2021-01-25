@@ -11,7 +11,7 @@ Clone the repo
 
 Navigate to path `~\ProductAPI\` and run the command `docker-compose up`
 
-Swagger will then be accessible at  [http://localhost:8000/swagger/index.html](http://localhost:8000/swagger/index.html)  
+Swagger will then be accessible at  [http://localhost:8000/swagger/index.html](http://localhost:8000/swagger/index.html)
 
 Alternatively, after docker-compose is run, we can open the solution from Visual Studio using the launch profile **ProductStore.API**
  

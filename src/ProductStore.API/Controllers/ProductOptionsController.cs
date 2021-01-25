@@ -71,7 +71,7 @@ namespace ProductStore.API.Controllers
             catch (ProductOptionNotFoundException exception)
             {
                 _logger.LogError(exception, exception.Message);
-                return NotFound(exception);
+                return NotFound(exception.Message);
             }
         }
 
