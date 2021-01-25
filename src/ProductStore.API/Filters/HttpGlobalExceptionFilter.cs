@@ -6,7 +6,7 @@ using System.Net;
 
 namespace ProductStore.API.Filters
 {
-    public partial class HttpGlobalExceptionFilter : IExceptionFilter
+    public class HttpGlobalExceptionFilter : IExceptionFilter
     {
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<HttpGlobalExceptionFilter> _logger;
