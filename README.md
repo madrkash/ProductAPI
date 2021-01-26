@@ -17,6 +17,7 @@ Alternatively, after docker-compose is run, we can open the solution from Visual
  
 and the swagger link would then be [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)
 
+**Please note**: Since integration tests are containerized using docker-compose, they will run only after running the appropriate docker-compose command mentioned [below](#Integration-Testing) in the documentation.
 
 ## Core Technologies
 
