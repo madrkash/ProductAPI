@@ -17,7 +17,7 @@ Alternatively, after docker-compose is run, we can open the solution from Visual
  
 and the swagger link would then be [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)
 
-**Please note**: Since integration tests are containerized using docker-compose, they will run only after running the appropriate docker-compose command mentioned [below](#Integration-Testing) in the documentation.
+**Please note**: Integration tests can be run after running the docker-compose command above.
 
 ## Core Technologies
 
@@ -68,13 +68,11 @@ I have based my solution on SOLID principles by employing:
 4. Tested all the individual components with specific responsibilities separately. 
 
 ### Integration Testing
-1. Containerized comprehensive controller level tests covering all different success and failure CRUD scenarios by interacting with a separate test database running inside another container.
-2. Integration tests can be run after navigating to the path `~\ProductAPI\` by running the command 
-`docker-compose -f docker-compose.tests.yml up`.
+1. Comprehensive controller level tests using xUnit covering all different success and failure CRUD scenarios by interacting with the containerized application database.
 
 ### Containerization using docker-compose
 1. Container communication between API and DB.
-2. A separate docker-compose setup for container communication between integration tests project and its own test DB.
+
 ### Documentation
 1. **Swagger** 
 
@@ -86,6 +84,8 @@ I have based my solution on SOLID principles by employing:
 
 If I had more time, I would have liked to implement the below features:
 
-1. Implement Jwt Authentication and corresponding Authorization to secure the APIs.
+1. Containerize integration tests and its own test database.
 
-2. Host the solution on AWS infrastructure.
+2. Implement Jwt Authentication and corresponding Authorization to secure the APIs.
+
+3. Host the solution on AWS infrastructure.
