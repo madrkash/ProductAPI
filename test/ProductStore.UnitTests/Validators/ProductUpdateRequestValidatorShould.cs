@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using ProductStore.API.ApiModels;
+using ProductStore.API.Dtos;
 using ProductStore.API.Validators;
 using System;
 using Xunit;
@@ -45,7 +45,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Multiple_Errors_When_Id_Price_DeliveryPrice_Are_Not_Provided()
         {
-            var productUpdateRequest = new ProductUpdateRequest
+            var productUpdateRequest = new ProductUpdateRequestDto
             {
                 Description = "Testing",
                 Name = "Test"
@@ -62,7 +62,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Error_When_Id_Is_Empty()
         {
-            var productUpdateRequest = new ProductUpdateRequest
+            var productUpdateRequest = new ProductUpdateRequestDto
             {
                 Description = "Testing",
                 Name = "Test",
@@ -80,7 +80,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Not_Have_Error_When_Request_Is_Valid()
         {
-            var productUpdateRequest = new ProductUpdateRequest
+            var productUpdateRequest = new ProductUpdateRequestDto
             {
                 Description = "Testing",
                 Name = "Test",

@@ -6,10 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Newtonsoft.Json;
-using ProductStore.API.ApiModels;
+using ProductStore.API.Dtos;
 using ProductStore.Tests.Common.Builders;
-using ProductStore.UnitTests.Builders;
 using Xunit;
 
 namespace ProductStore.IntegrationTests.Controllers
@@ -36,7 +36,7 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 //Assert
                 response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.Created);
             }
         }
 
@@ -57,7 +57,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 //Act
                 var response = await client.PostAsync($"/v1/productoptions", content);
                 //Assert
-                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             }
         }
 
@@ -82,11 +82,11 @@ namespace ProductStore.IntegrationTests.Controllers
                     Encoding.UTF8, "application/json");
 
                 //Act
-                var response = await client.PostAsync($"/v1/productoptions", updateProductOptionPayload);
+                var response = await client.PutAsync($"/v1/productoptions", updateProductOptionPayload);
 
                 //Assert
                 response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.Created);
             }
         }
 
@@ -106,7 +106,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 //Act
                 var response = await client.PutAsync($"/v1/productoptions", content);
                 //Assert
-                Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
         }
 
@@ -123,7 +123,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 //Act
                 var response = await client.PutAsync($"/v1/productoptions", content);
                 //Assert
-                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             }
         }
 
@@ -137,11 +137,11 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 //Assert
                 response.EnsureSuccessStatusCode();
-                var payload =
-                    JsonConvert.DeserializeObject<IEnumerable<ProductOptionViewModel>>(
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<ProductOptionResponseDto>>(
                         await response.Content.ReadAsStringAsync());
 
-                Assert.NotEmpty(payload);
+                result.Should().NotBeNullOrEmpty();
             }
         }
 
@@ -159,11 +159,11 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 response.EnsureSuccessStatusCode();
 
-                var payload =
-                    JsonConvert.DeserializeObject<IEnumerable<ProductOptionViewModel>>(await response.Content.ReadAsStringAsync());
+                var result =
+                    JsonConvert.DeserializeObject<IEnumerable<ProductOptionResponseDto>>(await response.Content.ReadAsStringAsync());
                 //Assert
-                Assert.NotEmpty(payload);
-                Assert.Equal(validProductOptionId, payload.ToList()[0].Id);
+                result.Should().NotBeNullOrEmpty();
+                result.Single().Id.Should().Be(validProductOptionId);
             }
         }
 
@@ -179,7 +179,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 var response = await client.GetAsync($"/v1/Products/{nonExistentGuid}/Options");
 
                 //Assert
-                Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
         }
 
@@ -197,11 +197,11 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 response.EnsureSuccessStatusCode();
 
-                var payload =
-                    JsonConvert.DeserializeObject<ProductOptionViewModel>(await response.Content.ReadAsStringAsync());
+                var result =
+                    JsonConvert.DeserializeObject<ProductOptionResponseDto>(await response.Content.ReadAsStringAsync());
                 //Assert
-                Assert.NotNull(payload);
-                Assert.Equal(validProductOptionId, payload.Id);
+                result.Should().NotBeNull();
+                result.Id.Should().Be(validProductOptionId);
             }
         }
 
@@ -213,7 +213,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 var nonExistentGuid = Guid.NewGuid();
                 var response = await client.GetAsync($"/v1/productoptions/{nonExistentGuid}");
 
-                Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
         }
 
@@ -231,7 +231,7 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 //Assert
                 response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.Accepted);
             }
         }
 
@@ -243,7 +243,7 @@ namespace ProductStore.IntegrationTests.Controllers
                 var nonExistentGuid = Guid.NewGuid();
                 var response = await client.DeleteAsync($"/v1/productoptions/{nonExistentGuid}");
 
-                Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+                response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
         }
 

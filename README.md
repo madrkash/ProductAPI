@@ -63,7 +63,7 @@ I have based my solution on SOLID principles by employing:
 ### Unit Testing
 1. Used **xUnit** as the Unit testing library along with Moq.
 2. Employed Object builder pattern for keeping unit tests clean and simple.
-3. Employed Xunit Data Driven testing where applicable with both *InlineData* and *ClassData*.
+3. Employed Xunit Data Driven testing where applicable with both *InlineData* and *ClassData* attributes implementation.
 4. Tested all the individual components with specific responsibilities separately. 
 
 ### Integration Testing

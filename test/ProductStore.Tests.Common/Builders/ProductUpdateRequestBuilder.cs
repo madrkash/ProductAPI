@@ -1,12 +1,11 @@
-﻿using ProductStore.Core.Models;
-using System;
-using ProductStore.API.ApiModels;
+﻿using System;
+using ProductStore.API.Dtos;
 
-namespace ProductStore.UnitTests.Builders
+namespace ProductStore.Tests.Common.Builders
 {
     public class ProductUpdateRequestBuilder
     {
-        private ProductUpdateRequest _productUpdateRequest = new ProductUpdateRequest();
+        private ProductUpdateRequestDto _productUpdateRequest = new ProductUpdateRequestDto();
 
         public ProductUpdateRequestBuilder WithId(Guid value)
         {
@@ -40,7 +39,7 @@ namespace ProductStore.UnitTests.Builders
 
         public ProductUpdateRequestBuilder WithDefaultValues()
         {
-            _productUpdateRequest = new ProductUpdateRequest
+            _productUpdateRequest = new ProductUpdateRequestDto
             {
                 Id = Guid.NewGuid(),
                 Name = $"Test Name {DateTime.Now.Ticks}",
@@ -52,6 +51,6 @@ namespace ProductStore.UnitTests.Builders
             return this;
         }
 
-        public ProductUpdateRequest Build() => _productUpdateRequest;
+        public ProductUpdateRequestDto Build() => _productUpdateRequest;
     }
 }

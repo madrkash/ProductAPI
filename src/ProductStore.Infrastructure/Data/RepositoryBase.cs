@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ProductStore.Infrastructure.Data
 {
-    public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
+    public abstract class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
     {
         protected readonly string ConnectionString;
 
-        public RepositoryBase(DatabaseConfig configuration)
+        protected RepositoryBase(DatabaseConfig configuration)
         {
             ConnectionString = configuration.ConnectionString;
             SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);

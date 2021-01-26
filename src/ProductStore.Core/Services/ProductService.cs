@@ -1,10 +1,10 @@
-﻿using ProductStore.API.Exceptions;
-using ProductStore.Core.Contracts;
+﻿using ProductStore.Core.Contracts;
 using ProductStore.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProductStore.Core.Exceptions;
 
 namespace ProductStore.Core.Services
 {
@@ -41,16 +41,16 @@ namespace ProductStore.Core.Services
             return products;
         }
 
-        public async Task<Guid> AddAsync(Product product)
+        public Task<Guid> AddAsync(Product product)
         {
-            return await _productRepository.AddAsync(product);
+            return _productRepository.AddAsync(product);
         }
 
         public async Task UpdateAsync(Product product)
         {
             var updateResult = await _productRepository.UpdateAsync(product);
 
-            if (updateResult.Equals(0))
+            if (updateResult == 0)
             {
                 throw new ProductNotFoundException(product.Id);
             }
@@ -66,7 +66,7 @@ namespace ProductStore.Core.Services
             await _productOptionService.DeleteListAsync(id);
             var deleteResult = await _productRepository.DeleteAsync(id);
 
-            if (deleteResult.Equals(0))
+            if (deleteResult == 0)
             {
                 throw new ProductNotFoundException(id);
             }

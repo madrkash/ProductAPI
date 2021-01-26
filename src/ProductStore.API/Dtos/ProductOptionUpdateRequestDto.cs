@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ProductStore.API.ApiModels
+namespace ProductStore.API.Dtos
 {
-    public class ProductOptionUpdateRequest
+    public class ProductOptionUpdateRequestDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

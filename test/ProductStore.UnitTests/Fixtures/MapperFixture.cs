@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Moq;
 using ProductStore.API.MappingConfigurations;
-using ProductStore.Core.Contracts;
-using ProductStore.Core.Services;
 
 namespace ProductStore.UnitTests.Fixtures
 {

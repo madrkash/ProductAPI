@@ -1,11 +1,11 @@
-﻿using System;
-using ProductStore.API.ApiModels;
+﻿using ProductStore.API.Dtos;
+using System;
 
 namespace ProductStore.Tests.Common.Builders
 {
     public class ProductCreateRequestBuilder
     {
-        private ProductCreateRequest _productCreateRequest = new ProductCreateRequest();
+        private ProductCreateRequestDto _productCreateRequest = new ProductCreateRequestDto();
 
         public ProductCreateRequestBuilder WithDescription(string value)
         {
@@ -39,7 +39,7 @@ namespace ProductStore.Tests.Common.Builders
 
         public ProductCreateRequestBuilder WithDefaultValues()
         {
-            _productCreateRequest = new ProductCreateRequest
+            _productCreateRequest = new ProductCreateRequestDto
             {
                 Name = $"Test Name {DateTime.Now.Ticks}",
                 Description = $"Test Description {DateTime.Now.Ticks}",
@@ -50,6 +50,6 @@ namespace ProductStore.Tests.Common.Builders
             return this;
         }
 
-        public ProductCreateRequest Build() => _productCreateRequest;
+        public ProductCreateRequestDto Build() => _productCreateRequest;
     }
 }

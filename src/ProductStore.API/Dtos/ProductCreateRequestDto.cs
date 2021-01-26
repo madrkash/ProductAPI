@@ -1,6 +1,6 @@
-﻿namespace ProductStore.API.ApiModels
+﻿namespace ProductStore.API.Dtos
 {
-    public class ProductCreateRequest
+    public class ProductCreateRequestDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

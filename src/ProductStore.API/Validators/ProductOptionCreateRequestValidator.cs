@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using ProductStore.API.ApiModels;
 using System;
+using ProductStore.API.Dtos;
 
 namespace ProductStore.API.Validators
 {
-    public class ProductOptionCreateRequestValidator : AbstractValidator<ProductOptionCreateRequest>
+    public class ProductOptionCreateRequestValidator : AbstractValidator<ProductOptionCreateRequestDto>
     {
         public ProductOptionCreateRequestValidator()
         {

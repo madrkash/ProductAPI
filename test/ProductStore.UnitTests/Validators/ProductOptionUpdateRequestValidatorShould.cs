@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
-using ProductStore.API.ApiModels;
 using ProductStore.API.Validators;
 using System;
+using ProductStore.API.Dtos;
 using Xunit;
 
 namespace ProductStore.UnitTests.Validators
@@ -33,7 +33,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Error_When_Id_ProductId_Are_Not_Provided()
         {
-            var productOptionUpdateRequest = new ProductOptionUpdateRequest
+            var productOptionUpdateRequest = new ProductOptionUpdateRequestDto
             {
                 Description = "Testing",
                 Name = "Test"
@@ -49,7 +49,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Error_When_Id_ProductId_Are_Empty()
         {
-            var productOptionUpdateRequest = new ProductOptionUpdateRequest
+            var productOptionUpdateRequest = new ProductOptionUpdateRequestDto
             {
                 Id = Guid.Empty,
                 Description = "Testing",
@@ -67,7 +67,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Not_Have_Error_When_Request_Is_Valid()
         {
-            var productOptionUpdateRequest = new ProductOptionUpdateRequest
+            var productOptionUpdateRequest = new ProductOptionUpdateRequestDto
             {
                 Id = Guid.NewGuid(),
                 Description = "Test Product Option",

@@ -1,12 +1,13 @@
 ﻿using Moq;
-using ProductStore.API.Exceptions;
 using ProductStore.Core.Models;
-using ProductStore.UnitTests.Builders;
 using ProductStore.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
+using ProductStore.Core.Exceptions;
+using ProductStore.Tests.Common.Builders;
 using Xunit;
 
 namespace ProductStore.UnitTests.Services
@@ -31,10 +32,11 @@ namespace ProductStore.UnitTests.Services
             var result = await fixture.Sut().GetByIdAsync(productId);
 
             // Assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(expectedProduct);
             fixture.MockProductRepository.Verify(
                 x => x.GetByIdAsync(productId), Times.Once());
-            Assert.True(result.Equals(expectedProduct));
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -43,10 +45,6 @@ namespace ProductStore.UnitTests.Services
             // Arrange
             var fixture = new ProductServiceFixture();
             var productId = Guid.NewGuid();
-            var expectedProduct = new ProductBuilder()
-                .WithDefaultValues()
-                .WithId(productId)
-                .Build();
 
             fixture.MockProductRepository.Setup(
                 x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Product)null);
@@ -56,7 +54,9 @@ namespace ProductStore.UnitTests.Services
             var exception =
                 await Assert.ThrowsAsync<ProductNotFoundException>(
                     async () => await fixture.Sut().GetByIdAsync(productId));
-            Assert.Equal($"No product found with id {productId}", exception.Message);
+            exception.Message.Should().Be($"No product found with id {productId}");
+            fixture.MockProductRepository.Verify(x => x.GetByIdAsync(It.IsAny<Guid>()), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -81,9 +81,11 @@ namespace ProductStore.UnitTests.Services
             var result = await fixture.Sut().GetAllAsync();
 
             // Assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(expectedProductList);
             fixture.MockProductRepository.Verify(x => x.GetAllAsync(), Times.Once());
-            Assert.True(result.SequenceEqual(expectedProductList));
+            fixture.MockProductRepository.VerifyNoOtherCalls();
+           
         }
 
         [Fact]
@@ -97,7 +99,9 @@ namespace ProductStore.UnitTests.Services
             // Assert
             var exception =
                 await Assert.ThrowsAsync<EntityNotFoundException>(async () => await fixture.Sut().GetAllAsync());
-            Assert.Equal($"No products available in the store", exception.Message);
+            exception.Message.Should().Be($"No products available in the store");
+            fixture.MockProductRepository.Verify(x => x.GetAllAsync(), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -117,8 +121,9 @@ namespace ProductStore.UnitTests.Services
             var result = await fixture.Sut().AddAsync(inputProduct);
 
             // Assert
-            Assert.Equal(productId, result);
+            productId.Should().Be(result);
             fixture.MockProductRepository.Verify(x => x.AddAsync(inputProduct), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -139,6 +144,7 @@ namespace ProductStore.UnitTests.Services
 
             // Assert
             fixture.MockProductRepository.Verify(x => x.UpdateAsync(inputProduct), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -158,8 +164,9 @@ namespace ProductStore.UnitTests.Services
             // Assert
             var exception =
                 await Assert.ThrowsAsync<ProductNotFoundException>(async () => await fixture.Sut().UpdateAsync(inputProduct));
-            Assert.Equal($"No product found with id {productId}", exception.Message);
-            fixture.MockProductRepository.Verify(expression: x => x.UpdateAsync(inputProduct), Times.Once());
+            exception.Message.Should().Be($"No product found with id {productId}");
+            fixture.MockProductRepository.Verify(x => x.UpdateAsync(inputProduct), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -177,7 +184,8 @@ namespace ProductStore.UnitTests.Services
 
             // Assert
             fixture.MockProductOptionService.Verify(x => x.DeleteListAsync(productId), Times.Once());
-            fixture.MockProductRepository.Verify(expression: x => x.DeleteAsync(productId), Times.Once());
+            fixture.MockProductRepository.Verify(x => x.DeleteAsync(productId), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -198,9 +206,10 @@ namespace ProductStore.UnitTests.Services
             // Assert
             var exception =
                 await Assert.ThrowsAsync<ProductNotFoundException>(async () => await fixture.Sut().DeleteAsync(productId));
-            Assert.Equal($"No product found with id {productId}", exception.Message);
+            exception.Message.Should().Be($"No product found with id {productId}");
             fixture.MockProductOptionService.Verify(x => x.DeleteListAsync(productId), Times.Once());
-            fixture.MockProductRepository.Verify(expression: x => x.DeleteAsync(productId), Times.Once());
+            fixture.MockProductRepository.Verify(x => x.DeleteAsync(productId), Times.Once());
+            fixture.MockProductRepository.VerifyNoOtherCalls();
         }
     }
 }

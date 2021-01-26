@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
-using ProductStore.API.ApiModels;
 using ProductStore.API.Validators;
 using System;
+using ProductStore.API.Dtos;
 using Xunit;
 
 namespace ProductStore.UnitTests.Validators
@@ -33,7 +33,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Error_When_ProductId_Is_Not_Provided()
         {
-            var productOptionCreateRequest = new ProductOptionCreateRequest
+            var productOptionCreateRequest = new ProductOptionCreateRequestDto
             {
                 Description = "Testing",
                 Name = "Test"
@@ -47,7 +47,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Have_Error_When_ProductId_Is_Empty()
         {
-            var productOptionCreateRequest = new ProductOptionCreateRequest
+            var productOptionCreateRequest = new ProductOptionCreateRequestDto
             {
                 Description = "Testing",
                 Name = "Test",
@@ -62,7 +62,7 @@ namespace ProductStore.UnitTests.Validators
         [Fact]
         public void Not_Have_Error_When_Request_Is_Valid()
         {
-            var productOptionCreateRequest = new ProductOptionCreateRequest
+            var productOptionCreateRequest = new ProductOptionCreateRequestDto
             {
                 Description = "Newest mobile product from Samsung",
                 Name = "Samsung Galaxy S10",

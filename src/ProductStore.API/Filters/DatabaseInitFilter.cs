@@ -7,6 +7,9 @@ using System;
 
 namespace ProductStore.API.Filters
 {
+    /// <summary>
+    /// Executes the data migration scripts and populates the configured database
+    /// </summary>
     public class DatabaseInitFilter : IStartupFilter
     {
         private readonly DatabaseConfig _config;
@@ -22,7 +25,6 @@ namespace ProductStore.API.Filters
         {
             var connectionString = _config.ConnectionString;
 
-            
             EnsureDatabase.For.PostgresqlDatabase(connectionString);
 
             var dbUpgradeEngineBuilder = DeployChanges.To

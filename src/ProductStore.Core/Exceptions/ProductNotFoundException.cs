@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProductStore.API.Exceptions
+namespace ProductStore.Core.Exceptions
 {
     public class ProductNotFoundException : Exception
     {

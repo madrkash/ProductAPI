@@ -1,10 +1,7 @@
-﻿using System;
+﻿using ProductStore.Tests.Common.Builders;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProductStore.UnitTests.Builders;
 
 namespace ProductStore.UnitTests.MappingConfigurations.DataSource
 {

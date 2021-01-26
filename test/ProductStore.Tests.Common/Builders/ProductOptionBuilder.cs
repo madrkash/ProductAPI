@@ -1,7 +1,7 @@
-﻿using ProductStore.Core.Models;
-using System;
+﻿using System;
+using ProductStore.Core.Models;
 
-namespace ProductStore.UnitTests.Builders
+namespace ProductStore.Tests.Common.Builders
 {
     public class ProductOptionBuilder
     {

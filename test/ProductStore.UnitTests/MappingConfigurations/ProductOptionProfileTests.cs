@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProductStore.API.ApiModels;
+﻿using FluentAssertions;
+using ProductStore.API.Dtos;
 using ProductStore.Core.Models;
 using ProductStore.UnitTests.Fixtures;
 using ProductStore.UnitTests.MappingConfigurations.DataSource;
+using System;
 using Xunit;
 
 namespace ProductStore.UnitTests.MappingConfigurations
@@ -15,24 +12,24 @@ namespace ProductStore.UnitTests.MappingConfigurations
     {
         [Theory]
         [ClassData(typeof(ProductOptionCreateRequestMapperDataSource))]
-        public void Map_ProductOptionCreateRequest_To_ProductOption_Should_Work(ProductOptionCreateRequest data)
+        public void Map_ProductOptionCreateRequest_To_ProductOption_Should_Work(ProductOptionCreateRequestDto data)
         {
             var mapper = new MapperFixture().Mapper;
             var result = mapper.Map<ProductOption>(data);
 
-            Assert.NotNull(result);
-            Assert.True(Guid.TryParse(result.Id.ToString(), out _));
+            result.Should().NotBeNull();
+            Guid.TryParse(result.Id.ToString(), out _).Should().BeTrue();
         }
 
         [Theory]
         [ClassData(typeof(ProductOptionUpdateRequestMapperDataSource))]
-        public void Map_ProductUpdateRequest_To_ProductOption_Should_Work(ProductOptionUpdateRequest data)
+        public void Map_ProductUpdateRequest_To_ProductOption_Should_Work(ProductOptionUpdateRequestDto data)
         {
             var mapper = new MapperFixture().Mapper;
             var result = mapper.Map<ProductOption>(data);
 
-            Assert.NotNull(result);
-            Assert.Equal(result.Id, data.Id);
+            result.Should().NotBeNull();
+            result.Id.Should().Be(data.Id);
         }
 
         [Theory]
@@ -40,10 +37,10 @@ namespace ProductStore.UnitTests.MappingConfigurations
         public void Map_ProductOption_To_ProductOptionViewModel_Should_Work(ProductOption data)
         {
             var mapper = new MapperFixture().Mapper;
-            var result = mapper.Map<ProductOptionViewModel>(data);
+            var result = mapper.Map<ProductOptionResponseDto>(data);
 
-            Assert.NotNull(result);
-            Assert.True(result.Equals(data));
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(data);
         }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProductStore.API.ApiModels;
-using ProductStore.API.Exceptions;
+using ProductStore.API.Dtos;
 using ProductStore.Core.Contracts;
+using ProductStore.Core.Exceptions;
 using ProductStore.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace ProductStore.API.Controllers
 {
@@ -33,7 +32,7 @@ namespace ProductStore.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProductOptionViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProductOptionResponseDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAllProductOptions()
         {
@@ -41,9 +40,8 @@ namespace ProductStore.API.Controllers
             {
                 _logger.LogDebug($"Received {nameof(GetAllProductOptions)} request");
                 var productOptions = await _service.GetAllAsync();
-                _logger.LogDebug($"Returned {productOptions.Count()} products as part of " +
-                                 $"{nameof(GetAllProductOptions)} request");
-                return Ok(_mapper.Map<IEnumerable<ProductOptionViewModel>>(productOptions));
+                _logger.LogDebug($"Returned {productOptions.Count()} products as part of {nameof(GetAllProductOptions)} request");
+                return Ok(_mapper.Map<IEnumerable<ProductOptionResponseDto>>(productOptions));
             }
             catch (EntityNotFoundException exception)
             {
@@ -54,7 +52,7 @@ namespace ProductStore.API.Controllers
 
         [HttpGet]
         [Route("/V{version:apiVersion}/Products/{productId}/Options")]
-        [ProducesResponseType(typeof(IEnumerable<ProductOptionViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProductOptionResponseDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetProductOptionsByProductId(Guid productId)
@@ -63,10 +61,10 @@ namespace ProductStore.API.Controllers
             {
                 _logger.LogDebug($"Received {nameof(GetProductOptionsByProductId)} request with Product Id {productId}");
                 var productOptions = await _service.GetAllOptionsByProductIdAsync(productId);
-                _logger.LogDebug($"Returned {nameof(GetProductOptionsByProductId)} response with product options " +
-                                 $"{JsonConvert.SerializeObject(productOptions)}");
+                _logger.LogDebug($"Returned {nameof(GetProductOptionsByProductId)} response with " +
+                                 $"product options {{@ProductOptions}}",productOptions);
 
-                return Ok(_mapper.Map<IEnumerable<ProductOptionViewModel>>(productOptions));
+                return Ok(_mapper.Map<IEnumerable<ProductOptionResponseDto>>(productOptions));
             }
             catch (ProductOptionNotFoundException exception)
             {
@@ -77,7 +75,7 @@ namespace ProductStore.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(ProductOptionViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProductOptionResponseDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetProductOptionById(Guid id)
@@ -86,10 +84,10 @@ namespace ProductStore.API.Controllers
             {
                 _logger.LogDebug($"Received {nameof(GetProductOptionById)} request with Id {id}");
                 var productOption = await _service.GetByIdAsync(id);
-                _logger.LogDebug($"Returned {nameof(GetProductOptionById)} response with product option " +
-                                 $"{JsonConvert.SerializeObject(productOption)}");
+                _logger.LogDebug($"Returned {nameof(GetProductOptionById)} response with " +
+                                 $"product option {{@ProductOption}}", productOption);
 
-                return Ok(_mapper.Map<ProductOptionViewModel>(productOption));
+                return Ok(_mapper.Map<ProductOptionResponseDto>(productOption));
             }
             catch (ProductOptionNotFoundException exception)
             {
@@ -101,10 +99,9 @@ namespace ProductStore.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> AddProductOption(ProductOptionCreateRequest productOptionCreateRequest)
+        public async Task<IActionResult> AddProductOption(ProductOptionCreateRequestDto productOptionCreateRequest)
         {
-            _logger.LogDebug($"Received {nameof(AddProductOption)} request with " +
-                             $"{JsonConvert.SerializeObject(productOptionCreateRequest)}");
+            _logger.LogDebug($"Received {nameof(AddProductOption)} request with {{@ProductOptionCreateRequest}}", productOptionCreateRequest);
             var productOptionId = await _service.AddAsync(_mapper.Map<ProductOption>(productOptionCreateRequest));
             _logger.LogDebug($"Returned {nameof(AddProductOption)} request with Id {productOptionId}");
             return CreatedAtAction(nameof(AddProductOption), productOptionId, productOptionId);
@@ -113,12 +110,11 @@ namespace ProductStore.API.Controllers
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> UpdateProductOption(ProductOptionUpdateRequest productOptionUpdateRequest)
+        public async Task<IActionResult> UpdateProductOption(ProductOptionUpdateRequestDto productOptionUpdateRequest)
         {
             try
             {
-                _logger.LogDebug($"Received {nameof(UpdateProductOption)} request with " +
-                                 $"{JsonConvert.SerializeObject(productOptionUpdateRequest)}");
+                _logger.LogDebug($"Received {nameof(UpdateProductOption)} request with {{@ProductOptionUpdateRequest}}",productOptionUpdateRequest);
                 await _service.UpdateAsync(_mapper.Map<ProductOption>(productOptionUpdateRequest));
                 _logger.LogDebug($"Returned {nameof(UpdateProductOption)} response for Id {productOptionUpdateRequest.Id}");
                 return CreatedAtAction(nameof(UpdateProductOption), productOptionUpdateRequest.Id,
@@ -133,8 +129,8 @@ namespace ProductStore.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> DeleteProductOption(Guid id)
         {
             try

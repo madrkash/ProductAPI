@@ -1,12 +1,11 @@
-﻿using ProductStore.Core.Models;
-using System;
-using ProductStore.API.ApiModels;
+﻿using System;
+using ProductStore.API.Dtos;
 
-namespace ProductStore.UnitTests.Builders
+namespace ProductStore.Tests.Common.Builders
 {
     public class ProductOptionCreateRequestBuilder
     {
-        private ProductOptionCreateRequest _productOptionCreateRequest = new ProductOptionCreateRequest();
+        private ProductOptionCreateRequestDto _productOptionCreateRequest = new ProductOptionCreateRequestDto();
 
         public ProductOptionCreateRequestBuilder WithDescription(string value)
         {
@@ -34,7 +33,7 @@ namespace ProductStore.UnitTests.Builders
 
         public ProductOptionCreateRequestBuilder WithDefaultValues()
         {
-            _productOptionCreateRequest = new ProductOptionCreateRequest
+            _productOptionCreateRequest = new ProductOptionCreateRequestDto
             {
                 Name = $"Test Name {DateTime.Now.Ticks}",
                 Description = $"Test Description {DateTime.Now.Ticks}",
@@ -44,6 +43,6 @@ namespace ProductStore.UnitTests.Builders
             return this;
         }
 
-        public ProductOptionCreateRequest Build() => _productOptionCreateRequest;
+        public ProductOptionCreateRequestDto Build() => _productOptionCreateRequest;
     }
 }
