@@ -24,12 +24,17 @@ namespace ProductStore.API.Filters
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
             var connectionString = _config.ConnectionString;
-
-            EnsureDatabase.For.PostgresqlDatabase(connectionString);
+            try
+            {
+                EnsureDatabase.For.PostgresqlDatabase(connectionString);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Failing trying to ensure DB existence {0}", ex.Message);
+            }
 
             var dbUpgradeEngineBuilder = DeployChanges.To
                 .PostgresqlDatabase(connectionString)
-                .LogToAutodetectedLog()
                 .WithScriptsEmbeddedInAssembly(typeof(Infrastructure.Data.ProductRepository).Assembly)
                 .WithTransaction();
 
