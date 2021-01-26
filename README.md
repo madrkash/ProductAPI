@@ -43,13 +43,13 @@ I have based my solution on SOLID principles by employing:
 3. Small and appropriate interfaces ensuring substitution and ease of testing.
 4. Generics where appropriate to support code reusability.
 5. Asynchronous flow throughout the application.
-6. **Automapper** to separate out the Api models from the database ones.
+6. **Automapper** to separate out the DTOs (Data Transfer Objects) from the database ones.
 
 ### Diagnostics
 
 1. Included appropriate exception handling both at global and specific scenario levels.
 2. Implemented logging using  **Serilog** and **Serilog File Sink**.
-3. Returned the appropriate status codes for different find of failures.
+3. Returned the appropriate status codes for different kind of failures.
 
 ### Resilience
 1. Input validation using **FluentValidation**.
@@ -61,13 +61,13 @@ I have based my solution on SOLID principles by employing:
 4. Constrained the database with entity relationship and ensured integrity via the API by implementing Cascade Delete.
 
 ### Unit Testing
-1. Used **xUnit** as the Unit testing library along with Moq.
+1. Used **xUnit** as the Unit testing library along with **Moq** and **FluentAssertions**.
 2. Employed Object builder pattern for keeping unit tests clean and simple.
 3. Employed Xunit Data Driven testing where applicable with both *InlineData* and *ClassData* attributes implementation.
 4. Tested all the individual components with specific responsibilities separately. 
 
 ### Integration Testing
-1. Comprehensive controller level testing covering all different success and failure CRUD scenarios by interacting with a separate test database running inside another container.
+1. Containerized comprehensive controller level tests covering all different success and failure CRUD scenarios by interacting with a separate test database running inside another container.
 2. Integration tests can be run after navigating to the path `~\ProductAPI\` by running the command 
 `docker-compose -f docker-compose.tests.yml up`.
 
@@ -78,7 +78,7 @@ I have based my solution on SOLID principles by employing:
 1. **Swagger** 
 
 ### Assumptions 
-1. Delivery Price is also mandatory.
+1. Delivery Price is mandatory.
 2. Authentication is not mandatory.
 
 ## TODO
@@ -87,6 +87,4 @@ If I had more time, I would have liked to implement the below features:
 
 1. Implement Jwt Authentication and corresponding Authorization to secure the APIs.
 
-2. Better and comprehensive logging at different levels.
-
-3. Host the solution on AWS infrastructure
+2. Host the solution on AWS infrastructure.
