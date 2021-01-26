@@ -80,7 +80,7 @@ namespace ProductStore.IntegrationTests.Controllers
 
                 HttpContent updateProductPayload = new StringContent(JsonConvert.SerializeObject(validUpdateProduct),
                     Encoding.UTF8, "application/json");
-                var response = await client.PutAsync($"/v1/products", updateProductPayload);
+                var response = await client.PutAsync($"/v1/products/{validProductId}", updateProductPayload);
 
                 response.EnsureSuccessStatusCode();
                 response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -95,10 +95,10 @@ namespace ProductStore.IntegrationTests.Controllers
                 var nonExistentProduct = new ProductUpdateRequestBuilder()
                     .WithDefaultValues()
                     .Build();
-
+                
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(nonExistentProduct),
                     Encoding.UTF8, "application/json");
-                var response = await client.PutAsync($"/v1/products", content);
+                var response = await client.PutAsync($"/v1/products/{nonExistentProduct.Id}", content);
 
                 response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
@@ -109,11 +109,31 @@ namespace ProductStore.IntegrationTests.Controllers
         {
             using (var client = new TestServerFixture().Client)
             {
-                var validProduct = new ProductUpdateRequestBuilder().Build();
+                var validProduct = new ProductUpdateRequestBuilder()
+                    .WithId(Guid.NewGuid())
+                    .Build();
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(validProduct),
                     Encoding.UTF8, "application/json");
-                var response = await client.PutAsync($"/v1/products", content);
+                var response = await client.PutAsync($"/v1/products/{validProduct.Id}", content);
+
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateProduct_ReturnsBadRequest_GivenMismatchOfProductIdBetweenRouteAndPayload()
+        {
+            using (var client = new TestServerFixture().Client)
+            {
+                var validProduct = new ProductUpdateRequestBuilder().
+                    WithDefaultValues()
+                    .Build();
+                var mismatchedProductId = Guid.NewGuid();
+
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(validProduct),
+                    Encoding.UTF8, "application/json");
+                var response = await client.PutAsync($"/v1/products/{mismatchedProductId}", content);
 
                 response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             }

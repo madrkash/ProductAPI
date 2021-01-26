@@ -82,7 +82,7 @@ namespace ProductStore.IntegrationTests.Controllers
                     Encoding.UTF8, "application/json");
 
                 //Act
-                var response = await client.PutAsync($"/v1/productoptions", updateProductOptionPayload);
+                var response = await client.PutAsync($"/v1/productoptions/{validProductOptionId}", updateProductOptionPayload);
 
                 //Assert
                 response.EnsureSuccessStatusCode();
@@ -104,28 +104,50 @@ namespace ProductStore.IntegrationTests.Controllers
                     Encoding.UTF8, "application/json");
 
                 //Act
-                var response = await client.PutAsync($"/v1/productoptions", content);
+                var response = await client.PutAsync($"/v1/productoptions/{nonExistentProductOption.Id}", content);
                 //Assert
                 response.StatusCode.Should().Be(HttpStatusCode.NotFound);
             }
         }
 
         [Fact]
-        public async Task UpdateProduct_ReturnsBadRequest_GivenInvalidPayload()
+        public async Task UpdateProductOption_ReturnsBadRequest_GivenInvalidPayload()
         {
             using (var client = new TestServerFixture().Client)
             {
                 //Arrange
-                var invalidProductOption = new ProductOptionUpdateRequestBuilder().Build();
+                var invalidProductOption = new ProductOptionUpdateRequestBuilder()
+                    .WithId(Guid.NewGuid())
+                    .Build();
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(invalidProductOption),
                     Encoding.UTF8, "application/json");
                 //Act
-                var response = await client.PutAsync($"/v1/productoptions", content);
+                var response = await client.PutAsync($"/v1/productoptions/{invalidProductOption.Id}", content);
                 //Assert
                 response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             }
         }
+
+        [Fact]
+        public async Task UpdateProductOption_ReturnsBadRequest_GivenMismatchOfProductOptionIdBetweenRouteAndPayload()
+        {
+            using (var client = new TestServerFixture().Client)
+            {
+                var validProductOption = new ProductOptionUpdateRequestBuilder().
+                    WithDefaultValues()
+                    .Build();
+                var mismatchedProductOptionId = Guid.NewGuid();
+
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(validProductOption),
+                    Encoding.UTF8, "application/json");
+                var response = await client.PutAsync($"/v1/products/{mismatchedProductOptionId}", content);
+
+                response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            }
+        }
+
+
 
         [Fact]
         public async Task GetAllProductOptions_ReturnsSuccessWithProductList()

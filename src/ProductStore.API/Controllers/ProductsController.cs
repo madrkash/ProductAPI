@@ -84,14 +84,21 @@ namespace ProductStore.API.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> UpdateProduct(ProductUpdateRequestDto productUpdateRequest)
+        public async Task<IActionResult> UpdateProduct(Guid id, ProductUpdateRequestDto productUpdateRequest)
         {
             try
             {
                 _logger.LogDebug($"Received {nameof(UpdateProduct)} request with {{@ProductUpdateRequest}}", productUpdateRequest);
+                
+                if (id != productUpdateRequest.Id)
+                {
+                    return BadRequest("Parameter mismatch between the route and the payload");
+                }
+
                 await _service.UpdateAsync(_mapper.Map<Product>(productUpdateRequest));
                 _logger.LogDebug($"Returned {nameof(UpdateProduct)} response for Id {productUpdateRequest.Id}");
                 return CreatedAtAction(nameof(UpdateProduct), 
