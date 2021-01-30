@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductStore.API.Dtos;
+using ProductStore.API.Filters;
 using ProductStore.Core.Contracts;
 using ProductStore.Core.Exceptions;
 using ProductStore.Core.Models;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ProductStore.API.Controllers
 {
+    [AuthorizationFilter]
     [ApiController]
     [ApiVersion("1")]
     [Route("V{version:apiVersion}/[controller]")]

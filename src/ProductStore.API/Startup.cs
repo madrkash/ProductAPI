@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using ProductStore.API.Configs;
 using ProductStore.API.Filters;
 using ProductStore.Core.IoC;
 using ProductStore.Infrastructure.Configs;
@@ -34,7 +35,9 @@ namespace ProductStore.API
                 .AddNewtonsoftJson(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
+            services.Configure<AuthorizationConfig>(Configuration.GetSection("AuthorizationConfig"));
             AddDatabaseAndMigrationServices(services);
+
 
             services.AddVersionedApiExplorer(o =>
             {
@@ -45,6 +48,7 @@ namespace ProductStore.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product Store API", Version = "v1" });
+                c.OperationFilter<ApiKeyHeaderSwaggerAttribute>();
             });
             services.AddApiVersioning(o =>
             {
@@ -74,16 +78,17 @@ namespace ProductStore.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product Store API V1");
-            });
-
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
             });
         }
     }
